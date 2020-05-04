@@ -12,16 +12,17 @@ namespace AvaloniaMVVMTodoDemo.ViewModels
 {
     public class TodoListViewModel : ViewModelBase
     {
-
-        public TodoListViewModel(IEnumerable<TodoItem> items)
+        private IEnumerable<TodoItem> items;
+        public TodoListViewModel(IEnumerable<TodoItem> _items)
         {
+            this.items = _items;
             // Items = new ReactiveList<TodoItem>(items);
             // CheckedItems = 
-            Items = new ObservableCollection<TodoItem>(items);
+            //Items = new ObservableCollection<TodoItem>(items);
 
-            CheckedItems = new ObservableCollection<TodoItem>(
-                Items.Where((todoItem) => todoItem.IsChecked)
-            );
+            //CheckedItems = new ObservableCollection<TodoItem>(
+            //    Items.Where((todoItem) => todoItem.IsChecked)
+            //);
 
             foreach (var item in Items)
             {
@@ -32,8 +33,20 @@ namespace AvaloniaMVVMTodoDemo.ViewModels
             }
         }
         // public ReactiveList<TodoItem> Items { get; }
-        public ObservableCollection<TodoItem> Items { get; }
+        private ObservableCollection<TodoItem> _items;
+        public ObservableCollection<TodoItem> Items {
+            get
+            {
+                return _items ?? (_items = new ObservableCollection<TodoItem>(items));
+            }
+        }
 
-        public ObservableCollection<TodoItem> CheckedItems { get; }
+        private ObservableCollection<TodoItem> _checkedItems;
+        public ObservableCollection<TodoItem> CheckedItems {
+            get {
+                return _checkedItems ?? (_checkedItems = new ObservableCollection<TodoItem>(
+                    Items.Where((todoItem) => todoItem.IsChecked)));
+            }
+        }
     }
 }

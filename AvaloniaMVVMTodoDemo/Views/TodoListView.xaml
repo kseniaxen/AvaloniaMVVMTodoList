@@ -10,7 +10,7 @@
       Add an item
     </Button>
     <Button DockPanel.Dock="Bottom"
-            Command="{Binding $parent[Window].DataContext.DeleteItem}">
+      Command ="{Binding $parent[Window].DataContext.Delete}">
       Delete Selected
     </Button>
     <ItemsControl Items="{Binding Items}">
